@@ -13770,7 +13770,10 @@ similar area where 'PTRATIO' much lower.</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
-<p>The R2 score has a high value. This suggest that the ratio of the MSE of the model used to arrive at y_predict to MSE of an naive model is close to 0(MSE of the model used to arrive at y_predict is significantly small compared to value of MSE of a naive model). Hence, Yes.</p>
+<p>When we define R2 as:
+    R2 = Explained variation / Total variation</p>
+<p>A high value of R2 suggests that the model does a good job in explaining the variabilty of the response data around its mean.</p>
+<p>The R2 score, in this case, has a high value. Hence, Yes.</p>
 
 </div>
 </div>
@@ -13801,7 +13804,7 @@ similar area where 'PTRATIO' much lower.</p>
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Import &#39;train_test_split&#39;</span>
 <span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span> <span class="k">as</span> <span class="n">ts_split</span>
 <span class="c1"># TODO: Shuffle and split the data into training and testing subsets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">ts_split</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">prices</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.33</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">ts_split</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">prices</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
 <span class="c1"># Success</span>
 <span class="k">print</span> <span class="s2">&quot;Training and testing split was successful.&quot;</span>
@@ -13847,7 +13850,7 @@ similar area where 'PTRATIO' much lower.</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
-<p>The objective is to build a model that generalises better. Training the model on all available data could lead to overfitting, by allowing the model to memorize the data it observes.<br>
+<p>The objective is to build a model that generalises better. If we train our model on all available data, we have no way of knowing if our model overfits.<br>
    By splitting the data into training and testing samples and training the model only on the training data set, we can evaluate the performance of the model by testing it over unobserved data and comparing the output with known results. This gives us information about the performance of the model and a likely predictor of how it performs in the real world.</p>
 
 </div>
@@ -15530,7 +15533,7 @@ For models with increasing maximum depth, we observe that while the training sco
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
 <p>-What is the grid search technique?<br>
-   Grid search is an approach to hyperparameter tuning that will build and evaluate a model for each combination of algorithm hyperparameters specified in a grid. We choose the hyperparameters and train the model on training set, perform CV and pick the model with the best F1 score.</p>
+   Grid search is an approach to hyperparameter tuning that will build and evaluate a model for each combination of algorithm hyperparameters specified in a grid. We choose the hyperparameters and train the model on training set, perform CV and pick the model with the best score given by the evaluation metric(Eg: F-1 score).</p>
 <p>-How it can be applied to optimize a learning algorithm?<br>
    Grid search allows you to define what hypeparameters you want to tune and provide a set of values, it helps decide the best combination of values for the learning algorithm.</p>
 
@@ -15559,9 +15562,9 @@ For models with increasing maximum depth, we observe that while the training sco
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
 <p><strong>What is the k-fold cross-validation training technique?</strong><br>
-We divide the data set into k sets of training and test data sets. We train the model on each of the k-1 sets of data, where for each run, we choose one of the k-1 sets as test data and train the model on the remaining sets. We compute the error in predicting the validation set. We iterate this process k-1 times, choosing a different test set each time. After k-1 iterations, we average the results to get the fin al model.</p>
+We divide the training data set into k folds. We hold out a fold and train the model on the remaining folds. We compute the error in predicting the validation set(the fold we held out). We iterate this process k times, choosing a different validation fold/set each time. The final accuracy of the model is the avg of accuracy over k iterations.</p>
 <p><strong>What benefit does this technique provide for grid search when optimizing a model?</strong></p>
-<p>Applying cross-validation prevents overfitting. There is a possibility that the knowledge from the test-data can leak into the choice of value set for the hyperparameter. Thus evaluation metrics no longer refelective of the generalized performance. Cross-validation prevents this by creating a validation set that can be used to update the value of the hyperparameter whithout looking at the test data.</p>
+<p>Applying cross-validation prevents overfitting. There is a possibility that the knowledge from the test-data can leak into the choice of value set for the hyperparameter. Thus evaluation metrics no longer refelective of the generalized performance. Cross-validation prevents this by creating a validation set that can be used to update the value of the hyperparameter whithout looking at the test data. K-folds cross validation allows us to combine the training and validation subsets. By doing so, we can avoid overfitting from tuning the hyperparameter values only on the validation subset.</p>
 
 </div>
 </div>
